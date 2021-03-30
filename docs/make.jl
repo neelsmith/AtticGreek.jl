@@ -13,7 +13,7 @@ makedocs(
     sitename = "AtticGreek.jl",
     pages = [
         "Home" => "index.md",
-       
+        "User's guide" => "guide.md",
         "API documentation" => "api.md"
     ]
 )

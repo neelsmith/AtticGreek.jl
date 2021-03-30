@@ -25,6 +25,10 @@ end
 $(SIGNATURES)
 """
 function tokenizeAtticGreek(s::AbstractString)
+    wsdelimited = split(s)
+    depunctuated = map(s -> splitPunctuation(s), wsdelimited)
+    tknstrings = Iterators.flatten(depunctuated) |> collect
+    tkns = map(t -> tokenforstring(t), tknstrings)
 end
 
 
@@ -34,7 +38,13 @@ end
 $(SIGNATURES)
 """
 function alphabetic()
-    "LISTEMHERE"
+    groups = ["αβγδεζθικλμνοπρστυφχς",
+    "άέίόύ",
+    "ὰὲὶὸὺ",
+    "ᾶêῖôῦ",
+    "h"
+    ]
+    join(groups,"") |> nfkc
 end
 
 """Compose a string with all alphabetic characters.
@@ -78,3 +88,31 @@ function isPunctuation(s::AbstractString)
     !nogood
 end
 
+
+"""
+Create correct OrthographicToken for a given string.
+
+$(SIGNATURES)    
+"""
+function tokenforstring(s::AbstractString)
+    normed = nfkc(s)
+    if isAlphabetic(normed)
+        OrthographicToken(normed, LexicalToken())
+    elseif isPunctuation(normed)
+        OrthographicToken(normed, PunctuationToken())
+    else
+        OrthographicToken(normed, Orthography.UnanalyzedToken())
+    end
+end
+
+
+"""
+Split off any trailing punctuation and return an Array of leading string + trailing punctuation.
+
+$(SIGNATURES)  
+"""
+function splitPunctuation(s::AbstractString)
+    punct = Orthography.collecttail(s, AtticGreek.punctuation())
+    trimmed = Orthography.trimtail(s, AtticGreek.punctuation())
+    filter(s -> ! isempty(s), [trimmed, punct])
+end

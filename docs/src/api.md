@@ -16,4 +16,6 @@ AtticGreek.alphabetic
 AtticGreek.punctuation
 AtticGreek.isAlphabetic
 AtticGreek.isPunctuation
+AtticGreek.tokenforstring
+AtticGreek.splitPunctuation
 ```
