@@ -18,7 +18,6 @@ makedocs(
     ]
 )
 
-
-# Add deploy later.
-# When ready to deploy, add TagBot and Documentation gh actions
-# to .github/workflows
+deploydocs(
+    repo = "github.com/neelsmith/AtticGreek.jl.git",
+) 
