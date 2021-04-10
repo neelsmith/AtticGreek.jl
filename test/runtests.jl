@@ -1,6 +1,6 @@
 using AtticGreek
 using Test
-using Orthography
+using Orthography, PolytonicGreek
 using Unicode
 
 

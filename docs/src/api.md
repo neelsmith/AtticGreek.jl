@@ -7,6 +7,8 @@
 AtticOrthography
 atticGreek
 tokenizeAtticGreek
+consonants
+vowels
 ```
 
 ## `AtticGreek` internals

@@ -45,3 +45,14 @@ end
     @test tokens[1].text == "hο"
     @test tokens[end].text == ":"
 end
+
+@testset "Test simple classification functions" begin
+    attic = atticGreek()
+    @test occursin("α", attic.vowels())
+    @test occursin(nfkc("ἀ"), attic.vowels())
+    @test occursin("β", attic.vowels()) == false
+
+    @test occursin("β", attic.consonants())
+    @test occursin("α", attic.consonants()) == false
+
+end
