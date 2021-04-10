@@ -3,7 +3,7 @@
     attic = atticGreek()
     @test typeof(attic) == AtticOrthography
     inherited = typeof(attic) |> supertype
-    @test inherited == Orthography.OrthographicSystem
+    @test inherited == PolytonicGreek.GreekOrthography
     
     s = nfkc("έδοχσεν τôι δέμοι")
     @test validstring(attic, s)

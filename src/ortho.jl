@@ -1,8 +1,10 @@
 "An orthographic system for texts in the pre-Euclidean Attic alphabet."
-struct AtticOrthography <: OrthographicSystem
+struct AtticOrthography <: PolytonicGreek.GreekOrthography
     codepoints
     tokencategories
     tokenizer
+    vowels
+    consonants
 end
 
 
@@ -17,7 +19,7 @@ function atticGreek()
         Orthography.LexicalToken,
         Orthography.PunctuationToken
     ]
-    AtticOrthography(cps, ttypes, tokenizeAtticGreek)
+    AtticOrthography(cps, ttypes, tokenizeAtticGreek, atticvowels, atticconsonants)
 end
 
 """Tokenize a string in the Attic Greek alphabet.
@@ -47,7 +49,7 @@ function alphabetic()
     join(groups,"") |> nfkc
 end
 
-"""Compose a string with all alphabetic characters.
+"""Compose a string with all punctuation characters.
 
 """
 function punctuation()
