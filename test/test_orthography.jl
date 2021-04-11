@@ -1,8 +1,4 @@
 
-@testset "Test creating AtticGreek structure" begin
-    
-end
-
 @testset "Test generating alphabetic characters" begin
     alphas = AtticGreek.alphabetic()
     expected = nfkc("αβγδεζθικλμνοπρστυφχςάέίόύὰὲὶὸὺᾶêῖôῦh")
@@ -48,11 +44,10 @@ end
 
 @testset "Test simple classification functions" begin
     attic = atticGreek()
-    @test occursin("α", attic.vowels())
-    @test occursin(nfkc("ἀ"), attic.vowels())
-    @test occursin("β", attic.vowels()) == false
+    @test occursin("α", vowels(attic))
+    @test occursin(nfkc("ἀ"), vowels(attic))
+    @test occursin("β", vowels(attic)) == false
 
-    @test occursin("β", attic.consonants())
-    @test occursin("α", attic.consonants()) == false
-
+    @test occursin("β", consonants(attic))
+    @test occursin("α", consonants(attic)) == false
 end

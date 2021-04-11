@@ -3,8 +3,40 @@ struct AtticOrthography <: PolytonicGreek.GreekOrthography
     codepoints
     tokencategories
     tokenizer
-    vowels
-    consonants
+end
+
+"""Implement Orthography's codepoints function for AtticOrthography.
+
+$(SIGNATURES)    
+"""
+function codepoints(attic::AtticOrthography)
+    attic.codepoints
+end
+
+
+"""Implement Orthography's tokentypes function for AtticOrthography.
+
+$(SIGNATURES)    
+"""
+function tokentypes(attic::AtticOrthography)
+    attic.tokencategories
+end
+
+"""Implement GreekOrthography's consonants function for AtticOrthography.
+
+$(SIGNATURES)    
+"""
+function consonants(attic::AtticOrthography)
+    atticconsonants()
+end
+
+
+"""Implement GreekOrthography's vowels function for AtticOrthography.
+
+$(SIGNATURES)    
+"""
+function vowels(attic::AtticOrthography)
+    atticvowels()
 end
 
 
@@ -19,7 +51,7 @@ function atticGreek()
         Orthography.LexicalToken,
         Orthography.PunctuationToken
     ]
-    AtticOrthography(cps, ttypes, tokenizeAtticGreek, atticvowels, atticconsonants)
+    AtticOrthography(cps, ttypes, tokenizeAtticGreek)
 end
 
 """Tokenize a string in the Attic Greek alphabet.

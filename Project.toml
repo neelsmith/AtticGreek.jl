@@ -1,7 +1,7 @@
 name = "AtticGreek"
 uuid = "330c8319-f7ed-461a-8c52-cee5da4c0892"
 authors = ["nsmith "]
-version = "0.2.0"
+version = "0.3.0"
 
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
@@ -14,6 +14,6 @@ Unicode = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 [compat]
 DocStringExtensions = "0.8"
 Documenter = "0.26"
-Orthography = "0.7"
-PolytonicGreek = "0.9"
+Orthography = "0.8"
+PolytonicGreek = "0.10"
 julia = "1.5"
