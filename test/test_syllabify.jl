@@ -112,7 +112,7 @@ end
 
     @test AtticGreek.syllabify("ἔργμα", atticGreek()) == ["ἐρ", "γμα"]
     @test AtticGreek.syllabify("#γνόμεν", atticGreek()) == ["γνο", "μεν"]
-    @test_broken AtticGreek.syllabify("δεδιέναι", atticGreek()) == ["δε","δι","ε","ναι"]
+    @test AtticGreek.syllabify("δεδιέναι", atticGreek()) == ["δε","δι","ε","ναι"]
 
 
     @test AtticGreek.syllabify("ουδέποτε", atticGreek()) == ["ου","δε","πο","τε"]

@@ -39,7 +39,7 @@ end
 
 
 function splitvowelcluster(s)
-    re = Regex("([ει])([αο])")
+    re = Regex("([ει])([αοε])")
     replace(s, re => s"\1 \2")
 end
 
