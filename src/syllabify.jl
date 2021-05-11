@@ -56,10 +56,6 @@ function syllabify(s, ortho::AtticOrthography)
     splitdiphthongvowel |> 
     splitvoweldiphthong |> 
     splitvowelcluster |> 
-    #=
-    splitshortvowelvowel |> 
-    splitlongvowelvowel |> 
-    =#
     splitupsilonvowel |> 
     PolytonicGreek.splitdoubleconsonants |> 
     splitconsonantcluster |>

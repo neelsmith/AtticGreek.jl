@@ -41,22 +41,6 @@ end
     @test divided == "οἰκι αις"
 end
 
-
-#=
-@testset "Test splitting on short vowel followed by vowel" begin
-    shortvowel = Unicode.normalize("δέομαι", :NFKC) |> rmaccents
-    divided = PolytonicGreek.splitshortvowelvowel(shortvowel)
-    @test divided == "δε ομαι"
-end
-
-@testset "Test splitting on long vowel followed by vowel" begin
-    longvowel = Unicode.normalize("εἰσῄα", :NFKC) |> rmaccents
-    divided = PolytonicGreek.splitlongvowelvowel(longvowel)
-    @test divided == "εἰσῃ α"
-end
-
-=#
-
 @testset "Test splitting on upsilon followed by vowel" begin
     upsilonvowel = Unicode.normalize("θύειν", :NFKC) |> rmaccents
     divided = AtticGreek.splitupsilonvowel(upsilonvowel)
