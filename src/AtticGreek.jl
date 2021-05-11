@@ -17,9 +17,11 @@ export tokenizeAtticGreek
 
 export rmaccents
 
+include("constants.jl")
 include("ortho.jl")
 include("dictionaries.jl")
 include("accents.jl")
+include("syllabify.jl")
 include("simplecategories.jl")
 
 end # module

@@ -7,3 +7,4 @@ using Unicode
 include("test_orthosystem.jl")
 include("test_orthography.jl")
 include("test_accents.jl")
+include("test_syllabify.jl")
