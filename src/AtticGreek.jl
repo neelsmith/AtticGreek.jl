@@ -21,8 +21,9 @@ export sortWords
 export rmaccents
 export syllabify
 
-include("constants.jl")
+
 include("ortho.jl")
+include("constants.jl")
 include("dictionaries.jl")
 include("accents.jl")
 include("syllabify.jl")

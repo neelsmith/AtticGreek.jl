@@ -179,3 +179,100 @@ function tokenform(s::AbstractString, ortho::AtticOrthography)
     stripped = stripenclitic(s, ortho) 
     flipaccent(stripped, ortho)
 end
+
+
+
+
+
+
+
+function accentsyllable(syll::AbstractString, accent::Symbol, ortho::AtticOrthography)
+    # Check that syll is only one syllable
+    sylls = syllabify(syll, ortho)
+    if length(sylls) > 1
+        @warn("accentsyllable: string $syll is more than one syllable.")
+        nothing
+    else
+        vowels = vowelsonly(syll, ortho)
+        barevowels = PolytonicGreek.stripquant(vowels)
+
+        if accent == :ACUTE
+            accentedvowel = addacute(barevowels, ortho)
+            if occursin("_", vowels)
+                rplcmnt = string(accentedvowel,"_")
+                replace(syll, string(barevowels,"_") => rplcmnt)
+            else 
+                replace(syll, barevowels => accentedvowel)
+            end
+
+        elseif accent == :CIRCUMFLEX
+            accentedvowel = addcircumflex(barevowels, ortho)
+            if occursin("_", vowels)
+                rplcmnt = string(accentedvowel,"_")
+                replace(syll, string(barevowels,"_") => rplcmnt)
+            else 
+                replace(syll, barevowels => accentedvowel)
+            end
+
+        else
+            @warn("accentsyllable: value of accent was neither :ACUTE nor :CIRCUMFLEX.")
+        end
+    end
+end
+
+
+function longsyllable(syll::AbstractString, ortho::AtticOrthography)
+    # Sanity check:
+    sylls = syllabify(syll, ortho)
+    
+    if (length(sylls) > 1)
+        @warn("longsyllable: string $syll includes more than syllable.")
+        nothing
+    else
+        noaccs = rmaccents(syll, ortho) 
+        vowels = vowelsonly(noaccs, ortho)
+        diphlist = split(ATTIC_DIPHTHONGS, "|") 
+        vowels in diphlist || vowels in longbynature(ortho)
+    end
+end
+
+
+
+#=
+function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthography)
+    sylls = syllabify(wrd, ortho)
+    ult = ultima(wrd, ortho)
+    if placement == :PENULT    
+        if length(sylls) < 2
+            @warn("accentword: cannot accent $wrd on penult since it does not have two syllables.")
+            nothing
+        else
+            pnlt = penult(wrd, ortho)
+            if longsyllable(pnlt) && finalshort(ult)
+                accentpenult(wrd, :CIRCUMFLEX)
+            else
+                accentpenult(wrd, :ACUTE)
+            end
+        end
+         
+    elseif placement == :RECESSIVE
+        if length(sylls) < 2
+            @warn("accentword: string $wrd has fewer than 2 syllables.")
+            nothing
+        else
+            if length(sylls) == 2
+                accentword(wrd, :PENULT)
+
+            elseif finallong(ult)
+                accentpenult(wrd, :ACUTE)
+
+            else
+                accentantepenult(wrd)
+            end
+        end
+     
+    else
+        @warn("accentword: value of placement was neither :PENULT nor :RECESSIVE.")
+    end
+end
+=#

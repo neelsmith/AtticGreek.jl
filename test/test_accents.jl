@@ -54,3 +54,7 @@ end
     @test AtticGreek.tokenform("άνθροπός", ag) == nfkc("άνθροπος")
     @test AtticGreek.tokenform("hοδὸν", ag) == nfkc("hοδόν")
 end
+
+
+
+
