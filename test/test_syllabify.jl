@@ -92,14 +92,19 @@ end
 
 
 
+@testset "Test syllabification of words in Kleinias decreee" begin
+    @test  AtticGreek.syllabify("θεοί", atticGreek()) ==      ["θε",      "οι"]
+    @test AtticGreek.syllabify("έδοχσεν", atticGreek()) ==  ["ε", "δο",  "χσεν"]
+end
+
 @testset "Test syllabification" begin
     @test AtticGreek.syllabify("προΐστεμι", atticGreek())== ["προ","ϊ","στε","μι"]
-    @test_broken AtticGreek.syllabify("ἀναμιμνεσκόμενος",atticGreek()) == ["ἀ","να","μι","μνε","σκο","με","νος"]
+    @test AtticGreek.syllabify("αναμιμνεσκόμενος",atticGreek()) == ["α","να","μι","μνε","σκο","με","νος"]
 
     @test AtticGreek.syllabify("ἄνδρασι", atticGreek()) == ["ἀν","δρα","σι"]
     @test AtticGreek.syllabify("κελεύει", atticGreek()) == ["κε","λευ","ει"]
 
-    @test_broken AtticGreek.syllabify("οἰκίαις", atticGreek()) == ["οἰ","κι", "αις"]
+    @test AtticGreek.syllabify("οικίαις", atticGreek()) == ["οι","κι", "αις"]
 
     @test_broken AtticGreek.syllabify("δέομαι", atticGreek()) == ["δε","ο","μαι"]
 

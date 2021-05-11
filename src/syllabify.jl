@@ -38,6 +38,8 @@ function splitvcv(s)
 end
 
 
+
+
 """
 """
 function syllabify(s, ortho::AtticOrthography)
@@ -57,6 +59,5 @@ function syllabify(s, ortho::AtticOrthography)
     PolytonicGreek.splitdoubleconsonants |> 
     splitconsonantcluster |>
     splitvcv |>   splitvcv |> # catch overlap
-    
     split
 end
