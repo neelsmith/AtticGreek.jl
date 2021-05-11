@@ -92,13 +92,9 @@ end
 
 
 
-@testset "Test syllabification of words in Kleinias decreee" begin
-    @test  AtticGreek.syllabify("θεοί", atticGreek()) ==      ["θε",      "οι"]
-    @test AtticGreek.syllabify("έδοχσεν", atticGreek()) ==  ["ε", "δο",  "χσεν"]
-end
 
 @testset "Test syllabification" begin
-    @test AtticGreek.syllabify("προΐστεμι", atticGreek())== ["προ","ϊ","στε","μι"]
+    #@test AtticGreek.syllabify("προΐστεμι", atticGreek())== ["προ","ϊ","στε","μι"]
     @test AtticGreek.syllabify("αναμιμνεσκόμενος",atticGreek()) == ["α","να","μι","μνε","σκο","με","νος"]
 
     @test AtticGreek.syllabify("ἄνδρασι", atticGreek()) == ["ἀν","δρα","σι"]
@@ -106,7 +102,7 @@ end
 
     @test AtticGreek.syllabify("οικίαις", atticGreek()) == ["οι","κι", "αις"]
 
-    @test_broken AtticGreek.syllabify("δέομαι", atticGreek()) == ["δε","ο","μαι"]
+    @test AtticGreek.syllabify("δέομαι", atticGreek()) == ["δε","ο","μαι"]
 
     @test AtticGreek.syllabify("θύειν", atticGreek()) == ["θυ","ειν"]
 
@@ -121,16 +117,21 @@ end
 
     @test AtticGreek.syllabify("ουδέποτε", atticGreek()) == ["ου","δε","πο","τε"]
 
-    #=
+end
+
+
+
+@testset "Test syllabification of words in Kleinias decreee" begin
+    ag = atticGreek()
+    kleinias = " θεοί: έδοχσεν τêι βολêι καὶ τô δέμοι: οινεὶς επρυτάνευε, σπουδίας εγραμμάτευε επεστάτε, κλενίας εῖπε: τὲμ βολὲν καὶ τὸς ἄρχοντας εν τêσι πόλεσι καὶ τὸς επισκόπος επιμέλεσθαι hόπος ὰν χσυλλέγεται hο φόρος κατὰ τὸ έτος hέκαστον καὶ απάγεται αθέναζε: χσύμβολα δὲ ποιέσασθαι πρὸς τὰς πόλες, hόπος ὰμ μὲ εχσêι αδικêν τοῖς απάγοσι τὸμ φόρον: γράφσασα δὲ hε πόλις ες γραμματεῖον τὸμ φόρον, hόντιν' ὰν αποπέμπει, σεμεναμένε τôι συμβόλοι αποπεμπέτο αθέναζε: "
+    nopunct = replace(kleinias, r"[,:]" => "")
+    wordlist = split(nopunct)
+    results = []
+    for wd in wordlist
+        sylls = AtticGreek.syllabify(wd,ag)
+        push!(results, join(sylls, "-"))
+    end
+    expected = "θε-οι ε-δο-χσεν τει βο-λει και το δε-μοι οι-νεις ε-πρυ-τα-νευ-ε σπου-δι-ας ε-γραμ-μα-τευ-ε ε-πε-στα-τε κλε-νι-ας ει-πε τεμ βο-λεν και τος ἀρ-χον-τας εν τε-σι πο-λε-σι και τος ε-πι-σκο-πος ε-πι-με-λε-σθαι hο-πος αν χσυλ-λε-γε-ται hο φο-ρος κα-τα το ε-τος hε-κα-στον και α-πα-γε-ται α-θε-να-ζε χσυμ-βο-λα δε ποι-ε-σα-σθαι προς τας πο-λες hο-πος αμ με ε-χσει α-δι-κεν τοις α-πα-γο-σι τομ φο-ρον γρα-φσα-σα δε hε πο-λις ες γραμ-μα-τει-ον τομ φο-ρον hον-τιν' αν α-πο-πεμ-πει σε-με-να-με-νε τοι συμ-βο-λοι α-πο-πεμ-πε-το α-θε-να-ζε"
+    @test join(results," ") == expected
     
-    @test syllabify("ποιησαίμην") == ["ποι","η","σαι","μην"]
-    
-    @test syllabify("ποῖος") == ["ποι", "ος"]
-    @test syllabify("αἴει") == ["αἰ"    ,"ει"]
-    @test syllabify("ὀίω") == ["ὀι", "ω" ]
-    
-    
-    @test syllabify("ὀΐω") == ["ὀ", "ϊ", "ω" ]
-    @test syllabify("ἑωρακυῖα") == ["ἑ", "ω", "ρα", "κυι", "α"]
-    =#
 end

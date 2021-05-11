@@ -38,19 +38,24 @@ function splitvcv(s)
 end
 
 
+function splitvowelcluster(s)
+    re = Regex("([ει])([αο])")
+    replace(s, re => s"\1 \2")
+end
 
 
 """
 """
 function syllabify(s, ortho::AtticOrthography)
-    nfkc(s) |>
-    AtticGreek.rmaccents  |>
+    ucodeok = nfkc(s)
+    tidy = AtticGreek.rmaccents(ucodeok, atticGreek())  |>
     PolytonicGreek.splitmorphemeboundary |>
     PolytonicGreek.splitdiaeresis |> 
     PolytonicGreek.splitmunu  |> 
     PolytonicGreek.splitliqcons |> 
     splitdiphthongvowel |> 
-    splitvoweldiphthong |>  
+    splitvoweldiphthong |> 
+    splitvowelcluster |> 
     #=
     splitshortvowelvowel |> 
     splitlongvowelvowel |> 
