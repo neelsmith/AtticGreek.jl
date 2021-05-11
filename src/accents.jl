@@ -19,7 +19,7 @@
     end
 
 
-    function addacute(vowel::AbstractString; ortho::AtticOrthography)
+    function addacute(vowel::AbstractString, ortho::AtticOrthography)
         bare = PolytonicGreek.stripquant(vowel)
         dict = acutedict(ortho)
         if bare in keys(dict)
@@ -36,7 +36,7 @@
     end
 
 
-    function addcircumflex(vowel::AbstractString; ortho::AtticOrthography)
+    function addcircumflex(vowel::AbstractString, ortho::AtticOrthography)
         bare = PolytonicGreek.stripquant(vowel)
         dict = circumflexdict(ortho) 
         if bare in keys(dict)
@@ -102,3 +102,47 @@ function antepenult(s, ag::AtticOrthography)
     end
 end
 
+
+
+
+
+function flipaccent(s, ag::AtticOrthography)
+    bare = PolytonicGreek.stripquant(s)
+    dict = AtticGreek.flipdict(ag)
+    modified = []
+    for c in nfkc(bare)
+        if string(c) in keys(dict)
+            flipped = dict[string(c)]
+            push!(modified, flipped)
+        else
+            push!(modified, string(c)) 
+        end
+    end
+    accented = join(modified,"")
+    if occursin("_", s)
+        string(accented, "_")
+    else
+        accented
+    end
+end 
+
+
+
+function vowelsonly(s::AbstractString, ag::AtticOrthography)
+    re = Regex("[$ATTIC_CONSONANTS]")
+    replace(s, re => "")
+end
+
+
+
+function countaccents(s::AbstractString, ortho::AtticOrthography )
+    normed = Unicode.normalize(s, :NFKC)
+    accents = 0
+    repertoire = allaccents(ortho)
+    for c in normed
+        if string(c) in repertoire
+            accents = accents + 1
+        end
+    end
+    accents
+end

@@ -1,5 +1,7 @@
 module AtticGreek
 
+using Unicode 
+
 using Orthography
 import Orthography: codepoints
 import Orthography: tokentypes

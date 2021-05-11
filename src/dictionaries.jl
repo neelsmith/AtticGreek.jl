@@ -97,3 +97,31 @@ function circumflexdict(ortho::AtticOrthography)
         ]
     )
 end
+
+
+function flipdict(ortho::AtticOrthography)
+    Dict(
+        [
+            "ὰ" => "ά" ,
+            "ὲ" => "έ" ,
+            "ὶ" => "ί" ,
+            "ὸ" => "ό" ,
+            "ὺ" => "ύ" ,
+ 
+            
+            
+            # diaereses
+            "ῒ" => "ΐ" ,
+            "ῢ" => "ΰ" ,
+        ]
+    )
+end
+
+
+
+function allaccents(ortho::AtticOrthography)
+    acutes = acutedict(ortho) |> values |> collect
+    circumflexes = circumflexdict(ortho) |> values |> collect
+    graves = flipdict(ortho) |> values |> collect
+    vcat(acutes, circumflexes, graves)
+end
