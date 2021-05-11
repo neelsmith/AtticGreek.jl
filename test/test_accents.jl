@@ -59,20 +59,22 @@ end
 
 
 @testset "Test adding accents to words" begin
-    @test accentword("ανθρο_πος", :RECESSIVE) == nfkc("άνθροπος")
-    @test accentword("ανθρο_πο_ς", :RECESSIVE) == nfkc("ανθρόπος")
-    @test accentword("ανθρο_ποι", :RECESSIVE) == nfkc("άνθροποι")
-    @test accentword("θεραπαιναι", :RECESSIVE) == nfkc("θεράπαιναι")
-    @test accentword("δο_ρον", :PENULT) == nfkc("δôρον")
-    @test accentword("δο_ρο_ι", :PENULT) == nfkc("δόροι")
+    ag = atticGreek()
+    @test AtticGreek.accentword("ανθρο_πος", :RECESSIVE, ag) == nfkc("άνθρο_πος")
+    @test AtticGreek.accentword("ανθρο_πο_ς", :RECESSIVE, ag) == nfkc("ανθρό_πο_ς")
+    @test AtticGreek.accentword("ανθρο_ποι", :RECESSIVE, ag) == nfkc("άνθρο_ποι")
+    @test AtticGreek.accentword("θεραπαιναι", :RECESSIVE, ag) == nfkc("θεράπαιναι")
+    @test AtticGreek.accentword("δο_ρον", :PENULT, ag) == nfkc("δô_ρον")
+    @test_broken AtticGreek.accentword("δο_ρο_ι", :PENULT, ag) == nfkc("δό_ρο_ι")
 end
+
 
 
 
 
 @testset "Test adding accent to specified syllable of word" begin
     ag = atticGreek()
-    @test AtticGreek.accentpenult("γνο_με_", :ACUTE, ag) == "γνώμη"
-    @test AtticGreek.accentultima("γνωμων", :CIRCUMFLEX, ag) == "γνωμῶν"
-    @test AtticGreek.accentantepenult("ἐκελευον", ag) == "ἐκέλευον"
+    @test AtticGreek.accentpenult("γνο_με_", :ACUTE, ag) == nfkc("γνό_με_")
+    @test AtticGreek.accentultima("γνο_μο_ν", :CIRCUMFLEX, ag) == nfkc("γνο_μô_ν")
+    @test AtticGreek.accentantepenult("εκελευον", ag) == "εκέλευον"
 end

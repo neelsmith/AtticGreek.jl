@@ -266,7 +266,27 @@ function accentpenult(wrd::AbstractString, accent::Symbol, ortho::AtticOrthograp
         @warn("accentpenult: can't accent word with fewer than two syllables $wrd")
         nothing
     else
-        sylls[end - 1] = accentsyllable(penult(wrd), accent, ortho)
+        sylls[end - 1] = accentsyllable(penult(wrd, ortho), accent, ortho)
+        join(sylls,"")
+    end
+end
+
+
+
+function accentultima(wrd::AbstractString, accent::Symbol, ortho::AtticOrthography)
+    sylls = syllabify(wrd, ortho)
+    sylls[end] = accentsyllable(ultima(wrd, ortho), accent, ortho)
+    join(sylls,"")
+end
+
+
+function accentantepenult(wrd::AbstractString, ortho::AtticOrthography)
+    sylls = syllabify(wrd, ortho)
+    if length(sylls) < 3
+        @warn("accentantepenult: can't accent word with fewer than three syllables $wrd")
+        nothing
+    else
+        sylls[end - 2] =  accentsyllable(antepenult(wrd, ortho), :ACUTE, ortho)
         join(sylls,"")
     end
 end
@@ -296,7 +316,7 @@ function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthogr
             if length(sylls) == 2
                 accentword(wrd, :PENULT, ortho)
 
-            elseif finallong(ult)
+            elseif finallong(ult, ortho)
                 accentpenult(wrd, :ACUTE, ortho)
 
             else
