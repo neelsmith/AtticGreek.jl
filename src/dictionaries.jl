@@ -2,7 +2,7 @@
 
 $(SIGNATURES)
 """
-function accentstripdict() 
+function accentstripdict(ortho::AtticOrthography) 
     Dict(
        'ά'  => 'α',
        'ὰ' => 'α',
@@ -125,3 +125,7 @@ function allaccents(ortho::AtticOrthography)
     graves = flipdict(ortho) |> values |> collect
     vcat(acutes, circumflexes, graves)
 end
+
+
+
+

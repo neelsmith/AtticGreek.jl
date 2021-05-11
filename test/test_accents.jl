@@ -44,10 +44,13 @@ end
 end
 
 
-#=
+@testset "Test stripping enclitic" begin
+    @test PolytonicGreek.stripenclitic("άνθροπός") == nfkc("άνθροπος")
+end
+
 
 @testset "Test normalizing word string to morphologically normal form" begin
-    @test AtticGreek.tokenform("άνθροπός") == nfkc("άνθροπος")
-    @test AtticGreek.tokenform("hοδὸν") == nfkc("hοδόν")
+    ag = atticGreek()
+    @test AtticGreek.tokenform("άνθροπός", ag) == nfkc("άνθροπος")
+    @test AtticGreek.tokenform("hοδὸν", ag) == nfkc("hοδόν")
 end
-=#

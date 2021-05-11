@@ -4,7 +4,7 @@
     """
     function rmaccents(s::AbstractString, ortho::AtticOrthography)
         stripped = []
-        dict = accentstripdict()
+        dict = accentstripdict(ortho)
         for c in nfkc(s)
             #@warn "Looking at $c"
             if c in keys(dict)
@@ -145,4 +145,37 @@ function countaccents(s::AbstractString, ortho::AtticOrthography )
         end
     end
     accents
+end
+
+
+
+
+function stripenclitic(s::AbstractString, ortho::AtticOrthography)
+    normed = Unicode.normalize(s, :NFKC)
+    dict = accentstripdict(ortho)
+    seen = 0
+    repertoire = allaccents(ortho)
+    modified = []
+    for c in normed
+        if string(c) in repertoire
+            seen = seen + 1
+            if seen == 2
+                push!(modified, dict[c])
+            elseif seen > 2
+                @warn("stripenclitic: too many accents in $s")
+                return nothing
+            else
+                push!(modified, c)
+            end
+        else
+            push!(modified, c)
+        end
+    end
+    join(modified,"")
+end
+
+
+function tokenform(s::AbstractString, ortho::AtticOrthography)
+    stripped = stripenclitic(s, ortho) 
+    flipaccent(stripped, ortho)
 end
