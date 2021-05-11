@@ -1,4 +1,5 @@
 
+const ATTIC_CONSONANTS =  "βγδζθκλμνπρστφχ"
 
 const ATTIC_SIMPLEVOWELS =  "αειου"
 const ATTIC_VOWELS = "$(ATTIC_SIMPLEVOWELS)$(PolytonicGreek.LG_DIAERESES)"

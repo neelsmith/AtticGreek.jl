@@ -16,6 +16,7 @@ export atticGreek, vowels, consonants
 export tokenizeAtticGreek
 
 export rmaccents
+export syllabify
 
 include("constants.jl")
 include("ortho.jl")
