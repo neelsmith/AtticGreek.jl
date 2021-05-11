@@ -58,3 +58,21 @@ end
 
 
 
+@testset "Test adding accents to words" begin
+    @test accentword("ανθρο_πος", :RECESSIVE) == nfkc("άνθροπος")
+    @test accentword("ανθρο_πο_ς", :RECESSIVE) == nfkc("ανθρόπος")
+    @test accentword("ανθρο_ποι", :RECESSIVE) == nfkc("άνθροποι")
+    @test accentword("θεραπαιναι", :RECESSIVE) == nfkc("θεράπαιναι")
+    @test accentword("δο_ρον", :PENULT) == nfkc("δôρον")
+    @test accentword("δο_ρο_ι", :PENULT) == nfkc("δόροι")
+end
+
+
+
+
+@testset "Test adding accent to specified syllable of word" begin
+    ag = atticGreek()
+    @test AtticGreek.accentpenult("γνο_με_", :ACUTE, ag) == "γνώμη"
+    @test AtticGreek.accentultima("γνωμων", :CIRCUMFLEX, ag) == "γνωμῶν"
+    @test AtticGreek.accentantepenult("ἐκελευον", ag) == "ἐκέλευον"
+end

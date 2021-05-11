@@ -237,8 +237,41 @@ function longsyllable(syll::AbstractString, ortho::AtticOrthography)
 end
 
 
+function finallong(syll::AbstractString, ortho::AtticOrthography)
+    # Sanity check:
+    sylls = syllabify(syll, ortho)
+    
+    if (length(sylls) > 1)
+        @warn("finallong: string $syll includes more than syllable.")
+        nothing
 
-#=
+    elseif endswith(syll, "οι") || endswith(syll, "αι")
+        false
+    else
+        vowels = vowelsonly(syll, ortho)
+        diphlist = split(ATTIC_DIPHTHONGS, "|") 
+        vowels in diphlist || vowels in longbynature(ortho)
+    end
+end
+
+
+function finalshort(syll::AbstractString, ortho::AtticOrthography)
+    ! finallong(syll, ortho)
+end
+
+
+function accentpenult(wrd::AbstractString, accent::Symbol, ortho::AtticOrthography)
+    sylls = syllabify(wrd, ortho)
+    if length(sylls) < 2
+        @warn("accentpenult: can't accent word with fewer than two syllables $wrd")
+        nothing
+    else
+        sylls[end - 1] = accentsyllable(penult(wrd), accent, ortho)
+        join(sylls,"")
+    end
+end
+
+
 function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthography)
     sylls = syllabify(wrd, ortho)
     ult = ultima(wrd, ortho)
@@ -248,10 +281,10 @@ function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthogr
             nothing
         else
             pnlt = penult(wrd, ortho)
-            if longsyllable(pnlt) && finalshort(ult)
-                accentpenult(wrd, :CIRCUMFLEX)
+            if longsyllable(pnlt, ortho) && finalshort(ult, ortho)
+                accentpenult(wrd, :CIRCUMFLEX, ortho)
             else
-                accentpenult(wrd, :ACUTE)
+                accentpenult(wrd, :ACUTE, ortho)
             end
         end
          
@@ -261,13 +294,13 @@ function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthogr
             nothing
         else
             if length(sylls) == 2
-                accentword(wrd, :PENULT)
+                accentword(wrd, :PENULT, ortho)
 
             elseif finallong(ult)
-                accentpenult(wrd, :ACUTE)
+                accentpenult(wrd, :ACUTE, ortho)
 
             else
-                accentantepenult(wrd)
+                accentantepenult(wrd, ortho)
             end
         end
      
@@ -275,4 +308,3 @@ function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthogr
         @warn("accentword: value of placement was neither :PENULT nor :RECESSIVE.")
     end
 end
-=#

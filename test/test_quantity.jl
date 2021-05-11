@@ -46,3 +46,19 @@ end
     @test AtticGreek.longsyllable("μα_ς", ag)
     @test AtticGreek.longsyllable("λευ", ag)
 end
+
+
+
+
+
+@testset "Test recognizing final οι/αι as short" begin
+    ag = atticGreek()
+    @test AtticGreek.finallong("οι", ag) == false
+    #@test accentword("ἀνθρωποι", :RECESSIVE) == nfkc("ἄνθρωποι")
+    #@test accentword("γνωμα_ς", :PENULT) == nfkc("γνώμα_ς")
+end
+
+@testset "Test recognizing non-final οι/αι as long" begin
+    ag = atticGreek()
+    @test AtticGreek.finallong("οις", ag) 
+end

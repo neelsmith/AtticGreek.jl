@@ -17,6 +17,7 @@ export AtticOrthography
 export atticGreek, vowels, consonants
 export tokenizeAtticGreek
 export sortWords
+export accentword
 
 export rmaccents
 export syllabify
