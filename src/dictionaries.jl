@@ -2,7 +2,7 @@
 
 $(SIGNATURES)
 """
-function accentstripdict() 
+function accentstripdict(ortho::AtticOrthography) 
     Dict(
        'ά'  => 'α',
        'ὰ' => 'α',
@@ -17,7 +17,7 @@ function accentstripdict()
        'ἔ' => 'ἐ',
        'ἒ' => 'ἐ',       
         # "eta"
-       'ê' => 'ε',
+        'ê' => 'ε',
         
        #= iota  =#
        'ί' => 'ι',
@@ -44,3 +44,88 @@ function accentstripdict()
        'ô' => 'ο'
    )
 end
+
+
+function acutedict(ortho::AtticOrthography) 
+    Dict(
+        [
+            "α" => "ά",
+            "ε" => "έ",
+            "ι" => "ί",
+            "ο" => "ό",
+            "υ" => "ύ",
+       
+            # diaereses
+            "ϊ" => "ΐ",
+            "ϋ" => "ΰ",
+    
+            # diphthongs
+            "αι" => "αί",
+            "ει" => "εί",
+            "οι" => "οί",
+            "υι" => "υί",
+            "αυ" => "αύ",
+            "ευ" => "εύ",
+            "ου" => "ού",
+        ]
+    )
+end
+
+
+function circumflexdict(ortho::AtticOrthography)
+    Dict(
+        [
+            "α" => "ᾶ",
+            "ε" => "ê",
+            "ο" => "ô",
+            "ι" => "ῖ",
+            "υ" => "ῦ",
+    
+            # diaereses
+            "ϊ" => "ῗ",
+            "ϋ" => "ῧ",
+    
+            # diphthongs
+            "αι" => "αῖ",
+            "ει" => "εῖ",
+            "οι" => "οῖ",
+            "υι" => "υῖ",
+            "αυ" => "αῦ",
+            "ευ" => "εῦ",
+            "ου" => "οῦ",
+    
+        ]
+    )
+end
+
+
+function flipdict(ortho::AtticOrthography)
+    Dict(
+        [
+            "ὰ" => "ά" ,
+            "ὲ" => "έ" ,
+            "ὶ" => "ί" ,
+            "ὸ" => "ό" ,
+            "ὺ" => "ύ" ,
+ 
+            
+            
+            # diaereses
+            "ῒ" => "ΐ" ,
+            "ῢ" => "ΰ" ,
+        ]
+    )
+end
+
+
+
+function allaccents(ortho::AtticOrthography)
+    acutes = acutedict(ortho) |> values |> collect
+    circumflexes = circumflexdict(ortho) |> values |> collect
+    graves = flipdict(ortho) |> values |> collect
+    vcat(acutes, circumflexes, graves)
+end
+
+
+
+

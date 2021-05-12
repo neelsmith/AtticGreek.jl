@@ -150,3 +150,18 @@ function splitPunctuation(s::AbstractString)
     trimmed = Orthography.trimtail(s, AtticGreek.punctuation())
     filter(s -> ! isempty(s), [trimmed, punct])
 end
+
+
+
+"""
+Alphabetically sort a list of words in Unicode Greek.
+
+$(SIGNATURES)
+"""
+function sortWords(words)
+    ag = atticGreek()
+    strippedpairs = map(wd ->   
+        (replace(AtticGreek.rmaccents(wd, ag),"h" => "" ), wd), words)
+	sorted = sort(strippedpairs)
+	map(pr -> pr[2], sorted)
+end
