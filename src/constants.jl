@@ -4,8 +4,7 @@ const ATTIC_CONSONANTS =  "βγδζθκλμνπρστφχς"
 #const ATTIC_SIMPLEVOWELS =  "αειου"
 const ATTIC_SIMPLEVOWELS =  "α|α_|ε|ε_|ι|ι_|ο|ο_|υ|υ_"
 const ATTIC_VOWELS = "$(ATTIC_SIMPLEVOWELS)$(PolytonicGreek.LG_DIAERESES)"
-const ATTIC_DIPHTHONGS = "αι|ει|οι|υι|αυ|ευ|ου|υἰ|αἰ|εἰ|οἰ|αὐ|εὐ|οὐ|υἰ|αἱ|εἱ|οἱ|αὑ|εὑ|οὑ |υἱ"  
-
+const ATTIC_DIPHTHONGS = "αι|ει|οι|υι|αυ|ευ|ου|α_ι|ε_ι|ο_ι|ε_υ"
 
 
 function longbynature(ortho::AtticOrthography) 

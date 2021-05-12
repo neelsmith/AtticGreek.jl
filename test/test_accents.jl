@@ -65,7 +65,7 @@ end
     @test AtticGreek.accentword("ανθρο_ποι", :RECESSIVE, ag) == nfkc("άνθρο_ποι")
     @test AtticGreek.accentword("θεραπαιναι", :RECESSIVE, ag) == nfkc("θεράπαιναι")
     @test AtticGreek.accentword("δο_ρον", :PENULT, ag) == nfkc("δô_ρον")
-    @test_broken AtticGreek.accentword("δο_ρο_ι", :PENULT, ag) == nfkc("δό_ρο_ι")
+    @test AtticGreek.accentword("δο_ρο_ι", :PENULT, ag) == nfkc("δό_ρο_ι")
 end
 
 
