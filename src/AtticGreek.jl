@@ -19,7 +19,7 @@ using Documenter, DocStringExtensions
 export AtticOrthography
 export atticGreek, vowels, consonants
 export tokenizeAtticGreek
-#export sortWords # Need to republish this in Polytonic Greek
+export sortWords # Need to republish this in Polytonic Greek
 export accentword
 
 export rmaccents

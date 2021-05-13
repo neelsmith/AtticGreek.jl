@@ -158,10 +158,10 @@ Alphabetically sort a list of words in Unicode Greek.
 
 $(SIGNATURES)
 """
-function sortWords(words)
+function sortWords(words, ortho::AtticOrthography)
     ag = atticGreek()
     strippedpairs = map(wd ->   
-        (replace(AtticGreek.rmaccents(wd, ag),"h" => "" ), wd), words)
+        (replace(AtticGreek.rmaccents(wd, ortho),"h" => "" ), wd), words)
 	sorted = sort(strippedpairs)
 	map(pr -> pr[2], sorted)
 end
