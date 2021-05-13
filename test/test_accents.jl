@@ -45,7 +45,8 @@ end
 
 
 @testset "Test stripping enclitic" begin
-    @test PolytonicGreek.stripenclitic("άνθροπός") == nfkc("άνθροπος")
+    ag = atticGreek()
+    @test AtticGreek.stripenclitic("άνθροπός", ag) == nfkc("άνθροπος")
 end
 
 
