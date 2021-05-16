@@ -1,16 +1,24 @@
 
 const ATTIC_CONSONANTS =  "βγδζθκλμνπρστφχς"
-
-#const ATTIC_SIMPLEVOWELS =  "αειου"
-const ATTIC_SIMPLEVOWELS =  "α|α_|ε|ε_|ι|ι_|ο|ο_|υ|υ_"
-const ATTIC_VOWELS = "$(ATTIC_SIMPLEVOWELS)$(PolytonicGreek.LG_DIAERESES)"
-const ATTIC_DIPHTHONGS = "αι|ει|οι|υι|αυ|ευ|ου|α_ι|ε_ι|ο_ι|ε_υ"
+const ATTIC_SIMPLEVOWELS =  "αειου"
 
 
 function longbynature(ortho::AtticOrthography) 
-    macra = []
+    macra = ["ê","ô"]
     for c in ATTIC_SIMPLEVOWELS
         push!(macra,string(c,"_"))
     end
     macra
+end
+
+#const ATTIC_SIMPLEVOWELS =  "α|α_|ε|ε_|ι|ι_|ο|ο_|υ|υ_"
+const ATTIC_VOWELS = "$(ATTIC_SIMPLEVOWELS)$(PolytonicGreek.LG_DIAERESES)$(longbynature(atticGreek()))"
+const ATTIC_DIPHTHONGS = "αι|ει|οι|υι|αυ|ευ|ου|α_ι|ε_ι|ο_ι|ε_υ"
+
+
+function vowels_re()
+    simple = join(split(ATTIC_SIMPLEVOWELS, ""), "|")
+    diaereses = join(split(PolytonicGreek.LG_DIAERESES, ""), "|")
+    longs = join(longbynature(atticGreek()), "|")
+    join([simple, diaereses, longs], "|")
 end

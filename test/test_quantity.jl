@@ -48,9 +48,6 @@ end
 end
 
 
-
-
-
 @testset "Test recognizing final οι/αι as short" begin
     ag = atticGreek()
     @test AtticGreek.finallong("οι", ag) == false
@@ -61,4 +58,18 @@ end
 @testset "Test recognizing non-final οι/αι as long" begin
     ag = atticGreek()
     @test AtticGreek.finallong("οις", ag) 
+end
+
+
+@testset "Test circumflex on ascii base character" begin
+    ag = atticGreek()
+    @test_broken AtticGreek.longsyllable("êς", ag)
+    @test_broken AtticGreek.longsyllable("ôν", ag)
+end
+
+@testset "Test explicitly marked long vowels" begin
+    ag = atticGreek()
+    @test AtticGreek.finallong("ο_ν", ag)
+    @test AtticGreek.finallong("ε_ς", ag)
+
 end
