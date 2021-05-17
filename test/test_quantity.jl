@@ -63,8 +63,8 @@ end
 
 @testset "Test circumflex on ascii base character" begin
     ag = atticGreek()
-    @test_broken AtticGreek.longsyllable("êς", ag)
-    @test_broken AtticGreek.longsyllable("ôν", ag)
+    @test AtticGreek.longsyllable("êς", ag)
+    @test AtticGreek.longsyllable("ôν", ag)
 end
 
 @testset "Test explicitly marked long vowels" begin

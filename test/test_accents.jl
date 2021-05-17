@@ -20,8 +20,8 @@ end
 
 
 @testset "Test extracting syllables from words" begin
-    @test_broken AtticGreek.antepenult("άνθροπος", atticGreek()) == "αν"
-    @test_broken AtticGreek.penult("άνθροπος", atticGreek()) ==  "θρο"
+    @test AtticGreek.antepenult("άνθροπος", atticGreek()) == "αν"
+    @test AtticGreek.penult("άνθροπος", atticGreek()) ==  "θρο"
 end
 
 
