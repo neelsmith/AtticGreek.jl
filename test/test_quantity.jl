@@ -71,5 +71,4 @@ end
     ag = atticGreek()
     @test AtticGreek.finallong("ο_ν", ag)
     @test AtticGreek.finallong("ε_ς", ag)
-
 end
