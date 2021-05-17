@@ -220,7 +220,15 @@ function accentsyllable(syll::AbstractString, accent::Symbol, ortho::AtticOrthog
     end
 end
 
+"""True if `syll` is a long syllable in Attic Greek orthography.
 
+$(SIGNATURES)
+
+# Arguments
+
+- `syll` is a single syllable
+- `ortho` an instance of `AtticOrthography`
+"""
 function longsyllable(syll::AbstractString, ortho::AtticOrthography)
     # Sanity check:
     sylls = syllabify(syll, ortho)
@@ -229,10 +237,14 @@ function longsyllable(syll::AbstractString, ortho::AtticOrthography)
         @warn("longsyllable: string $syll includes more than syllable.")
         nothing
     else
-        noaccs = rmaccents(syll, ortho) 
-        vowels = vowelsonly(noaccs, ortho)
-        diphlist = split(ATTIC_DIPHTHONGS, "|") 
-        vowels in diphlist || vowels in longbynature(ortho)
+        if vowelsonly(syll, ortho) in  ATTIC_CIRCUMFLEXES
+            true
+        else
+            noaccs = rmaccents(syll, ortho) 
+            vowels = vowelsonly(noaccs, ortho)
+            diphlist = split(ATTIC_DIPHTHONGS, "|") 
+            vowels in diphlist || vowels in longbynature(ortho) 
+        end
     end
 end
 
