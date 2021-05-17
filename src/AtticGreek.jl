@@ -16,6 +16,7 @@ import PolytonicGreek: sortWords
 import PolytonicGreek: vowels
 import PolytonicGreek: consonants
 import PolytonicGreek: rmaccents
+import PolytonicGreek: countaccents
 
 using Documenter, DocStringExtensions
 
@@ -25,7 +26,7 @@ export tokenizeAtticGreek
 export sortWords
 export accentword, accentultima, accentpenult, accentantepenult
 
-export rmaccents
+export rmaccents, countaccents
 export syllabify
 
 
