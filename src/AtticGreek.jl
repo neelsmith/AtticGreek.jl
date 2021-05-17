@@ -9,6 +9,9 @@ import Orthography: tokentypes
 using PolytonicGreek
 import PolytonicGreek: syllabify
 import PolytonicGreek: accentword
+import PolytonicGreek: accentultima
+import PolytonicGreek: accentpenult
+import PolytonicGreek: accentantepenult
 import PolytonicGreek: sortWords
 import PolytonicGreek: vowels
 import PolytonicGreek: consonants
@@ -19,8 +22,8 @@ using Documenter, DocStringExtensions
 export AtticOrthography
 export atticGreek, vowels, consonants
 export tokenizeAtticGreek
-export sortWords # Need to republish this in Polytonic Greek
-export accentword
+export sortWords
+export accentword, accentultima, accentpenult, accentantepenult
 
 export rmaccents
 export syllabify
