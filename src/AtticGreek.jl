@@ -24,9 +24,11 @@ export AtticOrthography
 export atticGreek, vowels, consonants
 export tokenizeAtticGreek
 export sortWords
-export accentword, accentultima, accentpenult, accentantepenult
+
 
 export rmaccents, countaccents
+export accentword, accentultima, accentpenult, accentantepenult
+
 export syllabify
 
 
