@@ -205,6 +205,8 @@ function accentsyllable(syll::AbstractString, accent::Symbol, ortho::AtticOrthog
                 replace(syll, barevowels => accentedvowel)
             end
 
+            # modify this to allow for long vowel marked with macron as first
+            # vowel of a diphthong (including iota "subscript")
         elseif accent == :CIRCUMFLEX
             accentedvowel = addcircumflex(barevowels, ortho)
             if occursin("_", vowels)
