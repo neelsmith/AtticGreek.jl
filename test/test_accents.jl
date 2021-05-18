@@ -79,3 +79,8 @@ end
     @test AtticGreek.accentultima("γνο_μο_ν", :CIRCUMFLEX, ag) == nfkc("γνο_μô_ν")
     @test AtticGreek.accentantepenult("εκελευον", ag) == "εκέλευον"
 end
+
+@testset "Test circumflex with iota-subscript patterns" begin
+    ag = atticGreek()
+    @test accentultima("βολε_ι", :CIRCUMFLEX, ag) == nfkc("βολê_ι")
+end

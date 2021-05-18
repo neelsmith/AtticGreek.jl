@@ -18,7 +18,12 @@
         join(stripped,"")
     end
 
-
+    """
+    Add an acute accent to a single vowel or diphthong.
+    
+    $(SIGNATURES)
+ 
+    """
     function addacute(vowel::AbstractString, ortho::AtticOrthography)
         bare = PolytonicGreek.stripquant(vowel)
         dict = acutedict(ortho)
@@ -35,7 +40,11 @@
         end
     end
 
-
+    """
+    Add a circumflex accent to a single vowel or diphthong
+    
+    $(SIGNATURES)
+    """
     function addcircumflex(vowel::AbstractString, ortho::AtticOrthography)
         bare = PolytonicGreek.stripquant(vowel)
         dict = circumflexdict(ortho) 
@@ -105,7 +114,11 @@ end
 
 
 
+"""
+Convert grave accent to acute.   
 
+$(SIGNATURES)
+"""
 function flipaccent(s, ag::AtticOrthography)
     bare = PolytonicGreek.stripquant(s)
     dict = AtticGreek.flipdict(ag)
@@ -128,13 +141,22 @@ end
 
 
 
+"""
+Remove all consonants from `s`.
+
+$(SIGNATURES)
+```
+"""
 function vowelsonly(s::AbstractString, ag::AtticOrthography)
     re = Regex("[$ATTIC_CONSONANTS]")
     replace(s, re => "")
 end
 
 
+"""Counts number of accents in `s`.
 
+$(SIGNATURES)
+"""
 function countaccents(s::AbstractString, ortho::AtticOrthography )
     normed = Unicode.normalize(s, :NFKC)
     accents = 0
@@ -149,7 +171,10 @@ end
 
 
 
+"""Remove any second accent due to enclisis from `s`.
 
+$(SIGNATURES)
+"""
 function stripenclitic(s::AbstractString, ortho::AtticOrthography)
     normed = Unicode.normalize(s, :NFKC)
     dict = accentstripdict(ortho)
@@ -174,7 +199,10 @@ function stripenclitic(s::AbstractString, ortho::AtticOrthography)
     join(modified,"")
 end
 
+"""Normalize `s` to a standard form with no enclitics, and all barytone accent converted to oxytone.
 
+$(SIGNATURES)
+"""
 function tokenform(s::AbstractString, ortho::AtticOrthography)
     stripped = stripenclitic(s, ortho) 
     flipaccent(stripped, ortho)
@@ -182,10 +210,17 @@ end
 
 
 
+"""
+Add specified accent to a single syllable.  
 
+$(SIGNATURES)
 
+# Parameters
 
+- `syll` is a string value for a single syllable.
+- `accent` is either `:ACUTE` or `:CIRCUMFLEX`.  The function returns `nothing` for any other symbol for accent.
 
+"""
 function accentsyllable(syll::AbstractString, accent::Symbol, ortho::AtticOrthography)
     # Check that syll is only one syllable
     sylls = syllabify(syll, ortho)
@@ -208,12 +243,18 @@ function accentsyllable(syll::AbstractString, accent::Symbol, ortho::AtticOrthog
             # modify this to allow for long vowel marked with macron as first
             # vowel of a diphthong (including iota "subscript")
         elseif accent == :CIRCUMFLEX
-            accentedvowel = addcircumflex(barevowels, ortho)
-            if occursin("_", vowels)
-                rplcmnt = string(accentedvowel,"_")
-                replace(syll, string(barevowels,"_") => rplcmnt)
-            else 
-                replace(syll, barevowels => accentedvowel)
+            if vowels == "ε_ι"
+                replace(syll,    "ε_ι" =>    "ê_ι")
+            elseif vowels == "ο_ι"
+                replace(syll, "ο_ι" =>  "ô_ι")
+            else
+                accentedvowel = addcircumflex(barevowels, ortho)
+                if occursin("_", vowels)
+                    rplcmnt = string(accentedvowel,"_")
+                    replace(syll, string(barevowels,"_") => rplcmnt)
+                else 
+                    replace(syll, barevowels => accentedvowel)
+                end
             end
 
         else
@@ -250,7 +291,10 @@ function longsyllable(syll::AbstractString, ortho::AtticOrthography)
     end
 end
 
+"""True if `syll` counts as long for accent in ultima.
 
+$(SIGNATURES)
+"""
 function finallong(syll::AbstractString, ortho::AtticOrthography)
     # Sanity check:
     sylls = syllabify(syll, ortho)
@@ -269,11 +313,21 @@ function finallong(syll::AbstractString, ortho::AtticOrthography)
 end
 
 
+"""
+True if `syll` counts as short for accent in ultima.
+
+$(SIGNATURES)
+"""
 function finalshort(syll::AbstractString, ortho::AtticOrthography)
     ! finallong(syll, ortho)
 end
 
+"""Place specified accent on penult of `wrd`.
 
+$(SIGNATURES)
+
+`accent` is one of either `:ACUTE` or `:CIRCUMFLEX`.  The function returns `nothing` for any other symbol for accent.
+"""
 function accentpenult(wrd::AbstractString, accent::Symbol, ortho::AtticOrthography)
     sylls = syllabify(wrd, ortho)
     if length(sylls) < 2
@@ -286,7 +340,12 @@ function accentpenult(wrd::AbstractString, accent::Symbol, ortho::AtticOrthograp
 end
 
 
+"""Place specified accent on final syllable of `wrd`.
 
+$(SIGNATURES)
+
+`accent` is one of either `:ACUTE` or `:CIRCUMFLEX`.  The function returns `nothing` for any other symbol for accent.
+"""
 function accentultima(wrd::AbstractString, accent::Symbol, ortho::AtticOrthography)
     sylls = syllabify(wrd, ortho)
     sylls[end] = accentsyllable(ultima(wrd, ortho), accent, ortho)
@@ -294,6 +353,10 @@ function accentultima(wrd::AbstractString, accent::Symbol, ortho::AtticOrthograp
 end
 
 
+"""Accent `wrd` proparoxytone.
+
+$(SIGNATURES)
+"""
 function accentantepenult(wrd::AbstractString, ortho::AtticOrthography)
     sylls = syllabify(wrd, ortho)
     if length(sylls) < 3
@@ -306,6 +369,20 @@ function accentantepenult(wrd::AbstractString, ortho::AtticOrthography)
 end
 
 
+"""
+Accent word according to specified system of accent placement.
+
+$(SIGNATURES)
+
+# Parameters
+
+- `wrd` is a string value representing a single lexical token.
+- `placement` is one of `:RECESSIVE` for recessive accent 
+or `:PENULT` for persistent accent on the penultimate syllable.
+
+Note that it is not possible to accent the ultima correctly without
+additional morphological information beyond the string value of the token.
+"""
 function  accentword(wrd::AbstractString, placement::Symbol, ortho::AtticOrthography)
     sylls = syllabify(wrd, ortho)
     ult = ultima(wrd, ortho)
