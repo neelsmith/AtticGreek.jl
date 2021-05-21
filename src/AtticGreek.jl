@@ -17,6 +17,7 @@ import PolytonicGreek: vowels
 import PolytonicGreek: consonants
 import PolytonicGreek: rmaccents
 import PolytonicGreek: countaccents
+import PolytonicGreek: augment
 
 using Documenter, DocStringExtensions
 
@@ -37,6 +38,7 @@ include("constants.jl")
 include("dictionaries.jl")
 include("accents.jl")
 include("syllabify.jl")
+include("augment.jl")
 include("simplecategories.jl")
 
 end # module
