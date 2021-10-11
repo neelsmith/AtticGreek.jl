@@ -17,14 +17,14 @@ So we can validate strings:
 
 ```@example attic
 s = nfkc("έδοχσεν τôι δέμοι")
-validstring(attic, s)
+validstring(s, attic)
 ```
 ```@example attic
-validstring(attic, "μῆνιν")
+validstring("μῆνιν", attic)
 ```
 And tokenize strings:
 ```@example attic
-tokens = Orthography.tokenize(attic, s)
+tokens = Orthography.tokenize(s, attic)
 length(tokens)
 ```
 ```@example attic

@@ -7,7 +7,6 @@
 ```@docs
 AtticOrthography
 atticGreek
-tokenizeAtticGreek
 sortWords
 ```
 

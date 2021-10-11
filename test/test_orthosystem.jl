@@ -6,9 +6,9 @@
     @test inherited == PolytonicGreek.GreekOrthography
     
     s = nfkc("έδοχσεν τôι δέμοι")
-    @test validstring(attic, s)
+    @test validstring(s, attic)
 
-    tokens = Orthography.tokenize(attic, s)
+    tokens = tokenize(s, attic)
     @test length(tokens) == 3
     @test tokens[1].tokencategory == LexicalToken()
     @test tokens[1].text == nfkc("έδοχσεν")

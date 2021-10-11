@@ -3,8 +3,11 @@ module AtticGreek
 using Unicode 
 
 using Orthography
-import Orthography: codepoints
-import Orthography: tokentypes
+
+import Orthography: OrthographyTrait
+import Orthography: tokentypes 
+import Orthography: codepoints 
+import Orthography: tokenize
 
 using PolytonicGreek
 import PolytonicGreek: syllabify
@@ -23,7 +26,6 @@ using Documenter, DocStringExtensions
 
 export AtticOrthography
 export atticGreek, vowels, consonants
-export tokenizeAtticGreek
 export sortWords
 
 
