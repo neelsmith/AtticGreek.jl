@@ -36,7 +36,7 @@ end
 
 
 @testset "Test tokenizing Attic Greek" begin
-    tokens = AtticGreek.tokenizeAtticGreek("hο δêμος:")
+    tokens = AtticGreek.tokenize("hο δêμος:", atticGreek())
     @test length(tokens) == 3
     @test tokens[1].text == "hο"
     @test tokens[end].text == ":"

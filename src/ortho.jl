@@ -2,8 +2,10 @@
 struct AtticOrthography <: PolytonicGreek.GreekOrthography
     codepoints
     tokencategories
-    tokenizer
 end
+
+"""Assign value for OrthographyTrait"""
+OrthographyTrait(::Type{AtticOrthography}) = IsOrthographicSystem()
 
 """Implement Orthography's codepoints function for AtticOrthography.
 
@@ -51,14 +53,14 @@ function atticGreek()
         Orthography.LexicalToken,
         Orthography.PunctuationToken
     ]
-    AtticOrthography(cps, ttypes, tokenizeAtticGreek)
+    AtticOrthography(cps, ttypes)
 end
 
 """Tokenize a string in the Attic Greek alphabet.
 
 $(SIGNATURES)
 """
-function tokenizeAtticGreek(s::AbstractString)
+function tokenize(s::AbstractString, o::AtticOrthography)
     wsdelimited = split(s)
     depunctuated = map(s -> splitPunctuation(s), wsdelimited)
     tknstrings = Iterators.flatten(depunctuated) |> collect
