@@ -17,6 +17,7 @@
 
     @test augment(ag; s = "ακουσε") == nfkc("ε_κουσε")
 
+    @test augment_initial(ag) == augment_medial(ag) == "ε"
     #=
     
     @test augment(ag; s = "εἰκαζε") == nfkc("ᾐκαζε")

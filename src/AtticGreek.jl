@@ -9,6 +9,7 @@ import Orthography: tokentypes
 import Orthography: codepoints 
 import Orthography: tokenize
 
+
 using PolytonicGreek
 import PolytonicGreek: syllabify
 import PolytonicGreek: accentword
@@ -21,6 +22,8 @@ import PolytonicGreek: consonants
 import PolytonicGreek: rmaccents
 import PolytonicGreek: countaccents
 import PolytonicGreek: augment
+import PolytonicGreek: augment_initial
+import PolytonicGreek: augment_medial
 
 using Documenter, DocStringExtensions
 
@@ -31,6 +34,7 @@ export sortWords
 
 export rmaccents, countaccents
 export accentword, accentultima, accentpenult, accentantepenult
+export augment, augment_initial, augment_medial
 
 export syllabify
 
