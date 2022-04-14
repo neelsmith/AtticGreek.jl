@@ -1,5 +1,8 @@
 
-function augmentdiphthong(s)
+"""Add temporal augment to diphthong `d`.
+$(SIGNATURES)
+"""
+function augmentdiphthong(d)
     dict = Dict(
         nfkc("ει") => nfkc("ε_ι"),
         nfkc("hει") => nfkc("hε_ι"),
@@ -18,7 +21,7 @@ function augmentdiphthong(s)
 
         "ρ" => "ερρ"
     )
-    augmented = s
+    augmented = d
     for k in keys(dict)
         re = Regex("^$(k)")
         augmented = replace(augmented, re => dict[k])
@@ -26,7 +29,11 @@ function augmentdiphthong(s)
     augmented
 end
 
-function augmentvowel(s)
+
+"""Add temporal augment to vowel `v`.
+$(SIGNATURES)
+"""
+function augmentvowel(v)
     augmentdict = Dict(
         nfkc("α") => nfkc("ε_"),
         nfkc("hα") => nfkc("hε_"),
@@ -45,11 +52,11 @@ function augmentvowel(s)
 
     )
     
-    if startswith(s, "ἱ_") || startswith(s, "ἰ_") || startswith(s, "ὑ_") || startswith(s, "ὐ_")
+    if startswith(v, "hι_") || startswith(v, "ι_") || startswith(v, "hυ_") || startswith(v, "υ_")
         s
         
     else 
-        augmented = s
+        augmented = v
         for k in keys(augmentdict)
             re = Regex("^$(k)")
             augmented = replace(augmented, re => augmentdict[k])
@@ -58,6 +65,20 @@ function augmentvowel(s)
     end
 end
 
+
+"""Implementatiοn of GreekOrthography's `augment` function for literary Greek.
+
+$(SIGNATURES)    
+
+NB: `augment` removes all accents  from the resulting string.
+
+
+# Parameters
+
+- `ortho` An instance of an `AtticOrthography`
+- `s` An optional string to augment.  If is not included, the function returns
+a default augment string for syllabic augment (i.e., a string that can be applied to verb forms starting with a consonant).
+"""
 function augment(ortho::AtticOrthography; s = nothing)
     if isnothing(s)
         nfkc("ε")
@@ -66,7 +87,7 @@ function augment(ortho::AtticOrthography; s = nothing)
         normalized = nfkc(s) |> rmaccents
         diphthongs = augmentdiphthong(normalized)
         if diphthongs != normalized
-            #@info "Normalized diphthong changed to $normalized"
+            @debug "Normalized diphthong changed to $normalized"
             normalized = diphthongs
 
         else  # not a diphthong, try vowel/breathing:
@@ -84,4 +105,20 @@ function augment(ortho::AtticOrthography; s = nothing)
         end
         normalized
     end
+end
+
+
+
+"""Identify string to use for syllabic augment in word-initial position.
+$(SIGNATURES)
+"""
+function augment_initial(ortho::AtticOrthography)
+    "ε"
+end
+
+"""Identify string to use for syllabic augment in compound verb.
+$(SIGNATURES)
+"""
+function augment_medial(ortho::AtticOrthography)
+    "ε"
 end
