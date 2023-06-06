@@ -20,9 +20,9 @@
 
     """
     Add an acute accent to a single vowel or diphthong.
-    
+
     $(SIGNATURES)
- 
+
     """
     function addacute(vowel::AbstractString, ortho::AtticOrthography)
         bare = PolytonicGreek.stripquant(vowel)
