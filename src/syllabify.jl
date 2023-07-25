@@ -49,7 +49,7 @@ end
 function syllabify(s, ortho::AtticOrthography)
     ucodeok = nfkc(s)
     tidy = AtticGreek.rmaccents(ucodeok, atticGreek())  |>
-    PolytonicGreek.splitmorphemeboundary |>
+    PolytonicGreek.morphemes |>
     PolytonicGreek.splitdiaeresis |> 
     PolytonicGreek.splitmunu  |> 
     PolytonicGreek.splitliqcons |> 
