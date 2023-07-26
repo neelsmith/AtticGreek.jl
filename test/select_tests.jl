@@ -2,7 +2,7 @@ using Pkg
 Pkg.activate("..")
 
 using AtticGreek
-using PolytonicGreek
+using PolytonicGreek, Orthography
 using Unicode
 using Test
 using TestSetExtensions
