@@ -1,7 +1,7 @@
 
 @testset "Test splitting on morpheme boundary" begin
     morph = nfkc("εισ#έια") |> rmaccents
-    divided = PolytonicGreek.morphemes(morph)
+    divided = PolytonicGreek.splitmorphemes(morph)
     @test divided == "εισ εια"
 end
 
