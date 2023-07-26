@@ -47,14 +47,12 @@ end
 """
 """
 function syllabify(s, ortho::AtticOrthography)
-    ucodeok = nfkc(s)
     morpheme_v =nfkc(s) |>
     rmaccents |>
     PolytonicGreek.splitmorphemes 
-
+    @debug("syllabify: morpheme_v is $(morpheme_v)")
     map(morpheme_v) do s
-        AtticGreek.rmaccents(ucodeok, atticGreek())  |>
-        PolytonicGreek.splitmorphemes |>
+        AtticGreek.rmaccents(s, atticGreek())  |>
         PolytonicGreek.splitdiaeresis |> 
         PolytonicGreek.splitmunu  |> 
         PolytonicGreek.splitliqcons |> 
@@ -66,5 +64,7 @@ function syllabify(s, ortho::AtticOrthography)
         splitconsonantcluster |>
         splitvcv |>   splitvcv |> # catch overlap
         split
-    end
+    end  |> Iterators.flatten |> collect
+    
+    
 end
